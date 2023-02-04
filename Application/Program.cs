@@ -14,6 +14,16 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
                              .AllowAnyOrigin()
                              .AllowCredentials();
                          }));
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "CRUD Operation",
+        Version = "v1",
+        Description = "CRUD Operation for Transflo test",
+    });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -24,7 +34,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "CRUD Operation"));
+
 }
 
 app.UseHttpsRedirection();
